@@ -35,7 +35,6 @@ def buildTranslationFile(resdir, locale, pairs):
 def translateString(query, targetLocale):
     request = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl={}&dt=t&q={}" \
         .format(targetLocale, quote(query))
-    print(request)
     translation = json.loads(requests.get(request).content)[0][0][0]
 
     return translation
