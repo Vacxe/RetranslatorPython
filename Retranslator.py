@@ -6,7 +6,12 @@ import requests
 import json
 import io
 
-supportedLocales = ['ru', 'es']
+supportedLocales = ['ru', 'es', 'de', 'zh', 'cz', 'nl', 'fr',
+                    'it', 'ja', 'ko', 'pl', 'ar', 'bg', 'ca',
+                    'hr', 'da', 'fi', 'el', 'iw', 'hi', 'hu',
+                    'in', 'lv', 'lt', 'nb', 'pt', 'ro', 'sr',
+                    'sk', 'sl', 'sv', 'tl', 'th', 'tr', 'uk',
+                    'vi']
 
 
 def buildTranslationFile(resdir, locale, pairs):
@@ -61,7 +66,6 @@ def main(argv):
     if os.path.isdir(resDir):
         print("Successful detection: " + resDir)
     else:
-        resDir = '/Users/konstantinaksenov/Documents/IdeaProject/air_pollution_wear/app/src/main/res'
         while not os.path.isdir(resDir):
             print("Input res directory manually")
             resDir = input()
