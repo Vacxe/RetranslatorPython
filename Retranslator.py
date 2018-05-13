@@ -19,7 +19,7 @@ def buildTranslationFile(resdir, locale, pairs):
     if not os.path.isdir(localizedValueDir):
         os.mkdir(localizedValueDir)
 
-    localizedValuesFile = localizedValueDir + "/values.xml"
+    localizedValuesFile = localizedValueDir + "/strings.xml"
 
     lines = ["<resources>\n"]
     for pair in pairs:
