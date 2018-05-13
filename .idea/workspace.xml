@@ -19,21 +19,11 @@
       <file leaf-file-name="Retranslator.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Retranslator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-656">
-              <caret line="36" column="43" lean-forward="false" selection-start-line="36" selection-start-column="43" selection-end-line="36" selection-end-column="43" />
+            <state relative-caret-position="204">
+              <caret line="35" column="85" lean-forward="false" selection-start-line="35" selection-start-column="85" selection-end-line="35" selection-end-column="85" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="builtins.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Library/Caches/PyCharm2017.2/python_stubs/-2010535109/builtins.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="239">
-              <caret line="234" column="0" lean-forward="false" selection-start-line="234" selection-start-column="0" selection-end-line="234" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -294,8 +284,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Retranslator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-656">
-          <caret line="36" column="43" lean-forward="false" selection-start-line="36" selection-start-column="43" selection-end-line="36" selection-end-column="43" />
+        <state relative-caret-position="204">
+          <caret line="35" column="85" lean-forward="false" selection-start-line="35" selection-start-column="85" selection-end-line="35" selection-end-column="85" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
