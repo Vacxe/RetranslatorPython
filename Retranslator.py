@@ -11,7 +11,7 @@ supportedLocales = ['ru', 'es', 'de', 'zh', 'cz', 'nl', 'fr',
                     'hr', 'da', 'fi', 'el', 'iw', 'hi', 'hu',
                     'in', 'lv', 'lt', 'nb', 'pt', 'ro', 'sr',
                     'sk', 'sl', 'sv', 'tl', 'th', 'tr', 'uk',
-                    'vi']
+                    'vi', 'en']
 
 
 def buildTranslationFile(resdir, locale, pairs):
