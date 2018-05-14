@@ -1,10 +1,11 @@
 import sys
 import os
-import re
+from xml.etree import ElementTree
 from requests.utils import quote
 import requests
 import json
 import io
+import re
 
 supportedLocales = ['ru', 'es', 'de', 'zh', 'cz', 'nl', 'fr',
                     'it', 'ja', 'ko', 'pl', 'ar', 'bg', 'ca',
@@ -12,43 +13,48 @@ supportedLocales = ['ru', 'es', 'de', 'zh', 'cz', 'nl', 'fr',
                     'in', 'lv', 'lt', 'nb', 'pt', 'ro', 'sr',
                     'sk', 'sl', 'sv', 'tl', 'th', 'tr', 'uk',
                     'vi', 'en']
+shieldSymbol = ' {} // '
 
 
-def buildTranslationFile(resdir, locale, pairs):
+def saveToFile(resdir, locale, xml):
     localizedValueDir = resdir + "/values-" + locale
     if not os.path.isdir(localizedValueDir):
         os.mkdir(localizedValueDir)
 
     localizedValuesFile = localizedValueDir + "/strings.xml"
 
-    lines = ["<resources>\n"]
-    for pair in pairs:
-        lines.append('\t<string name="{}">{}</string>\n'.format(pair[0], pair[1]))
-    lines.append("</resources>")
-
-    io.open(localizedValuesFile, "w", encoding='utf8').writelines(lines)
+    io.open(localizedValuesFile, "w", encoding='utf8').writelines(xml)
     print("Successful file creation for {} locale".format(locale))
 
     pass
 
 
 def translateString(query, targetLocale):
+    shieldSymbols = re.findall('[%][bBhHsScCdoxXeEfgGaAtTn]', query)
+    query = re.sub('[%][bBhHsScCdoxXeEfgGaAtTn]', shieldSymbol, query)
+
     request = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl={}&dt=t&q={}" \
         .format(targetLocale, quote(query))
     translation = json.loads(requests.get(request).content)[0][0][0]
-
+    translation = translation.replace("{} //", "{}").format(*shieldSymbols)
     return translation
     pass
 
 
-def translate(locale, pairs):
-    tranlations = []
-    for pair in pairs:
-        tranlations.append((pair[0], translateString(pair[1], locale)))
+def translateTo(baseXML, locale):
+    root = baseXML.getroot()
 
-    print('Localization finished for {} locale'.format(locale))
-    return tranlations
-    pass
+    for string in root.findall('string'):
+        string.text = translateString(string.text, locale)
+
+    for stringArray in root.findall('string-array'):
+        for item in stringArray.findall('item'):
+            item.text = translateString(item.text, locale)
+
+    for stringArray in root.findall('plurals'):
+        for item in stringArray.findall('item'):
+            item.text = translateString(item.text, locale)
+    return ElementTree.tostring(baseXML.getroot(), encoding='utf8').decode()
 
 
 def main(argv):
@@ -76,23 +82,11 @@ def main(argv):
         print("Could't find string.xml in default value directory")
         pass
 
-    with open(templateStringXmlLocation) as f:
-        content = f.readlines()
-        pairs = []
-        for line in content:
-            m = re.search('<string name="(.+?)">(.+?)</string>', line)
-            if m:
-                stringId = m.group(1)
-                value = m.group(2)
-                pairs.append((stringId, value))
-
-        print("Detected " + str(len(pairs)) + " strings")
-
-    print("Translation processing...")
+    baseXML = ElementTree.parse(templateStringXmlLocation)
 
     for locale in supportedLocales:
-        buildTranslationFile(resDir, locale, translate(locale, pairs))
-
+        translatedXML = translateTo(baseXML, locale)
+        saveToFile(resDir, locale, translatedXML)
     pass
 
 
