@@ -1,0 +1,18 @@
+<resources>
+    
+    <string name="test_string">Test string</string>
+    <string name="parametrized_string">Parametrized  %d string</string>
+    
+    <string-array name="test_array">
+        <item>Mercury</item>
+        <item>Venus</item>
+        <item>Earth</item>
+        <item>Mars</item>
+    </string-array>
+    
+    <plurals name="plural_name">
+        <item quantity="one">one</item>
+        <item quantity="many">many</item>
+    </plurals>
+    
+</resources>
