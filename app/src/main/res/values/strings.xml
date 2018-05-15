@@ -3,7 +3,6 @@
     <string name="test_string">Test string</string>
     <string name="parametrized_string">Parametrized  %d string</string>
     <string name="multi_parametrized_string">Multi %s Parametrized  %d string</string>
-    <string name="multilines_string">Multilines\nstring</string>
 
     <string-array name="test_array">
         <item>Mercury</item>

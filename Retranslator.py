@@ -13,7 +13,6 @@ supportedLocales = ['ru', 'es', 'de', 'zh', 'cz', 'nl', 'fr',
                     'in', 'lv', 'lt', 'nb', 'pt', 'ro', 'sr',
                     'sk', 'sl', 'sv', 'tl', 'th', 'tr', 'uk',
                     'vi', 'en']
-shieldSymbol = ' {} // '
 
 
 def saveToFile(resdir, locale, xml):
@@ -30,13 +29,31 @@ def saveToFile(resdir, locale, xml):
 
 
 def translateString(query, targetLocale):
-    shieldSymbols = re.findall('[%][bBhHsScCdoxXeEfgGaAtTn]', query)
-    query = re.sub('[%][bBhHsScCdoxXeEfgGaAtTn]', shieldSymbol, query)
+    shieldSymbols = re.findall('[%][bBhHsScCdoxXeEfgGaA]', query)
+    queries = re.split('[%][bBhHsScCdoxXeEfgGaA]', query)
 
-    request = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl={}&dt=t&q={}" \
+    translation = ""
+    for query in queries:
+        preSpace = query[0] == ' '
+        endspace = query[len(query)-1] == ' '
+        request = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl={}&dt=t&q={}" \
         .format(targetLocale, quote(query))
-    translation = json.loads(requests.get(request).content)[0][0][0]
-    translation = translation.replace("{} //", "{}").format(*shieldSymbols)
+        if preSpace:
+            translation += " "
+
+        result = json.loads(requests.get(request).content)[0][0][0]
+
+        if query[0].isupper():
+            result = result[0].upper() + result[1:]
+
+        translation += result
+
+        if endspace:
+            translation = translation + " "
+
+        if len(shieldSymbols) > 0:
+            translation += shieldSymbols.pop()
+
     return translation
     pass
 
@@ -82,10 +99,8 @@ def main(argv):
         print("Could't find string.xml in default value directory")
         pass
 
-    baseXML = ElementTree.parse(templateStringXmlLocation)
-
     for locale in supportedLocales:
-        translatedXML = translateTo(baseXML, locale)
+        translatedXML = translateTo(ElementTree.parse(templateStringXmlLocation), locale)
         saveToFile(resDir, locale, translatedXML)
     pass
 
