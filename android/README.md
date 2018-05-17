@@ -1,6 +1,9 @@
 # Retranslator
 Translate your applications in one click
 
+[![Android Arsenal]( https://img.shields.io/badge/Android%20Arsenal-Retranslator-green.svg?style=flat )]( https://android-arsenal.com/details/1/6945 )
+
+
 ![alt text](https://github.com/vacxe/Retranslator/blob/master/android/readme/scheme.jpg)
 
 **How to use**
