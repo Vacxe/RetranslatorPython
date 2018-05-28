@@ -54,6 +54,7 @@ def translateString(query, targetLocale):
         if len(shieldSymbols) > 0:
             translation += shieldSymbols.pop()
 
+        print(targetLocale+": translating \""+query+"\" to \""+translation+"\"")
     return translation
     pass
 
@@ -83,16 +84,23 @@ def main(argv):
 
     print("Try to find resources directory")
 
-    resDir = projectDir + "/app/src/main/res"
+    resDir = projectDir + "/app/src/main/res/"
+    templateStringXmlLocation = resDir + "/values/strings.xml"
 
     if os.path.isdir(resDir):
         print("Successful detection: " + resDir)
+
+    elif os.path.exists("string.xml"):
+        print("Found string.xml in"+os.getcwd())
+        templateStringXmlLocation="string.xml"
+        resDir="res"
+        if not os.path.isdir("res"):
+            os.mkdir("res")
     else:
         while not os.path.isdir(resDir):
             print("Input res directory manually")
             resDir = input()
 
-    templateStringXmlLocation = resDir + "/values/strings.xml"
     if os.path.exists(templateStringXmlLocation):
         print("Template string.xml detected")
     else:
