@@ -15,7 +15,7 @@ Translate your applications in one click
 Now you can easy translate your app to many languages in single click and FREE!
 Just run in terminal: 
 ```sh
-$ python3 retranlator.py
+$ python3 retranslator.py
 ```
 Or execute gradle task
 ```sh
